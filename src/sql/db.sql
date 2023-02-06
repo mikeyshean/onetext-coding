@@ -38,26 +38,26 @@ CREATE TABLE payments (
 );
 
 INSERT INTO payments (sender, receiver, currency, amount, status, payment_date) VALUES
-    ('send1', 'rec1', 'USD', 19.99, 'initiated', '2023-01-22'),
-    ('send2', 'rec2', 'USD', 5.00, 'success', '2023-01-22'),
-    ('send3', 'rec3', 'EUR', 19.99, 'error', '2023-01-23'),
-    ('send4', 'rec4', 'USD', 5.00, 'success', '2023-01-23'),
-    ('send4', 'rec4', 'JPY', 15.00, 'error', '2023-01-23'),
-    ('send5', 'rec5', 'USD', 19.99, 'initiated', '2023-01-24'),
-    ('send6', 'rec6', 'USD', 10.00, 'initiated', '2023-01-24'),
-    ('send6', 'rec6', 'USD', 20.00, 'success', '2023-01-24'),
-    ('send7', 'rec7', 'USD', 19.99, 'success', '2023-01-25'),
-    ('send8', 'rec8', 'USD', 19.99, 'success', '2023-01-25'),
-    ('send9', 'rec9', 'USD', 19.99, 'error', '2023-01-26'),
-    ('send10', 'rec10', 'USD', 19.99, 'success', '2023-01-26'),
-    ('send9', 'rec9', 'GBP', 19.99, 'error', '2023-01-26'),
-    ('send9', 'rec9', 'GBP', 19.99, 'error', '2023-01-26'),
+  ('send1', 'rec1', 'USD', 19.99, 'initiated', '2023-01-22'),
+  ('send2', 'rec2', 'USD', 5.00, 'success', '2023-01-22'),
+  ('send3', 'rec3', 'EUR', 19.99, 'error', '2023-01-23'),
+  ('send4', 'rec4', 'USD', 5.00, 'success', '2023-01-23'),
+  ('send4', 'rec4', 'JPY', 15.00, 'error', '2023-01-23'),
+  ('send5', 'rec5', 'USD', 19.99, 'initiated', '2023-01-24'),
+  ('send6', 'rec6', 'USD', 10.00, 'initiated', '2023-01-24'),
+  ('send6', 'rec6', 'USD', 20.00, 'success', '2023-01-24'),
+  ('send7', 'rec7', 'USD', 19.99, 'success', '2023-01-25'),
+  ('send8', 'rec8', 'USD', 19.99, 'success', '2023-01-25'),
+  ('send9', 'rec9', 'USD', 19.99, 'error', '2023-01-26'),
+  ('send10', 'rec10', 'USD', 19.99, 'success', '2023-01-26'),
+  ('send9', 'rec9', 'GBP', 19.99, 'error', '2023-01-26'),
+  ('send9', 'rec9', 'GBP', 19.99, 'error', '2023-01-26'),
 
 
 -- Write a query which can be used against the table to track the percentage of successful payments per day
 SELECT 
-	date_trunc('day', payment_date) as day, 
-	TRUNC(100.0 * SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END) / COUNT(*), 2) as pct
+  date_trunc('day', payment_date) as day, 
+  TRUNC(100.0 * SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END) / COUNT(*), 2) as pct
 FROM payments
 GROUP BY day
 ORDER BY day
@@ -65,8 +65,8 @@ ORDER BY day
 
 -- Write a query which shows the total sum of different amounts in different currencies for transactions which failed with an error
 SELECT 
-	currency, 
-	SUM(amount) as total
+  currency, 
+  SUM(amount) as total
 FROM payments
 WHERE status = 'error'
 GROUP BY currency 
@@ -106,7 +106,7 @@ ORDER BY avg_transaction_per_day;
 -- Tried another version using variables to store reference to min/max date so we don't need to run that sub-query, but didn't quite get it working
 -- This is where I got to with it:
 DO
- 	DECLARE min_date date,
+  DECLARE min_date date,
   DECLARE max_date date;
 
 BEGIN
