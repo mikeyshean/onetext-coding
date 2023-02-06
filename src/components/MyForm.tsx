@@ -48,7 +48,7 @@ export function MyForm() {
     if (!isValidPassword(password)) {
       setIsValid(false)
       setIsLoading(false)
-      return new Promise(resolve => resolve())
+      return Promise.reject()
     }
 
 
