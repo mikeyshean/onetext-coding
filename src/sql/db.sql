@@ -87,10 +87,8 @@ GROUP BY receiver
 ORDER BY avg
 
 
+
 -- Average # of payments for a receiver/day
-
--- Average payment (amount) made to each receiver
-
 -- First version using subquery in select
 
 SELECT receiver, TRUNC(SUM(count_transactions)::decimal / (SELECT max(payment_date) - min(payment_date) + 1.0 FROM payments), 2) as avg_transaction_per_day
@@ -103,8 +101,8 @@ FROM (
 GROUP BY receiver
 ORDER BY avg_transaction_per_day;
 
--- Tried another version using variables to store reference to min/max date so we don't need to run that sub-query, but didn't quite get it working
--- This is where I got to with it:
+-- Tried another version using variables to store reference to min/max date so we don't need to run that sub-query for each receiver.
+-- Didn't quite get it working, but this is the direction I was heading in:
 DO
   DECLARE min_date date,
   DECLARE max_date date;
