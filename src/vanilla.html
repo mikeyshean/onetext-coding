@@ -1,0 +1,52 @@
+<html>
+    <!-- 4. AB Tests
+  
+    At OneText, we often run AB tests directly on merchant store pages, to prove out an idea.
+    Sometimes the only access we have is to add a new script tag on the page.
+  
+    Please write some vanilla javascript (assume no libraries or frameworks), to:
+  
+    - Split users 50/50 into group A (control group) or group B (test group)
+    - If in group A, keep the existing page behavior
+    - If in group B, swap out an existing button on the page for a new button (see the example page below)
+      - The new button should say 'Buy Now with 20% Off'
+      - The new button should NOT submit the original form
+      - The new button should POST to 'onetext.com/api/checkout' and receive a response in the format `{ checkoutURL: string }`
+      - While the POST is happening, the button should show some loading state
+      - When the POST is complete, the page should redirect to the `checkoutURL`
+      - If the POST returns a non-200 response code, we should submit the original form
+    - Do not change the existing html on the page directly. You should only write new code in the `<script>` tag -->
+    
+    <body>
+        
+        <form method='post' action='checkout.php'>
+            <button>Buy Now</button>
+        </form>
+
+        <script>
+            const randomNum = Math.random()
+            if (randomNum <= .5) {
+                const form = document.querySelector("form");
+                const button = form.querySelector('button')
+                button.textContent = 'Buy Now with 20% Off'
+
+                const mySubmit = async function(e) {
+                    e.preventDefault()
+                   
+                    button.textContent = "Loading..."
+                    const response = await fetch('https://onetext.com/api/checkout', { method: 'POST' } )
+                    if (response.ok) {
+                        const url = await response.json()["checkoutURL"]
+                        window.location.replace(url);
+                    } else {
+                        form.removeEventListener('submit', mySubmit)
+                        form.submit()
+                        button.textContent = "Buy Now with 20% Off"
+                    }
+                }
+
+                form.addEventListener('submit', mySubmit)
+            }
+        </script>
+    </body>
+</html>
